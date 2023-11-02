@@ -58,6 +58,31 @@
 
                     <div class="course-items">
                         <div class="row">
+                            
+                            
+                            <div class="col-12" *ngIf="loading">
+                                <div class="text-center">
+                                    <div class="spinner-border" role="status">
+                                      <span class="sr-only">Loading...</span>
+                                    </div>
+                                  </div>
+                            </div>
+                           
+                            
+                              <!-- erreur connexion--> 
+                            <div class="col-12" *ngIf="errorOccured">
+
+
+
+                                <p>
+                                    Une erreur s'est produite
+                                </p>
+                                <button class="btn btn-primary" type="button" (click)="retry()" [disabled]="loading" *ngIf="errorOccured">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    retry
+                                  </button>
+                            </div>
+
                             <div class="col-lg-4 col-md-6" *ngFor="let c of listCourses">
                                 <app-course-item [course]="c"></app-course-item>
                             </div>

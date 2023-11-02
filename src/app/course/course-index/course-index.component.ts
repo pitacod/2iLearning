@@ -10,9 +10,12 @@ declare function init_plugins():any;
 })
 export class CourseIndexComponent implements OnInit {
 
+
   catList:string[];
 
   listCourses?:Course[];
+  errorOccured: boolean=false;
+  loading:boolean = true;
   
 
 
@@ -20,26 +23,43 @@ export class CourseIndexComponent implements OnInit {
     this.catList=['developpement','infographie'];
   }
   ngOnInit(): void {
+    this.loadCourses();
     
-    this.courseService.getCourses().subscribe({
-      next: (res)=>
-      {
-       this.listCourses = res as Course[];
-
-      },
-      error: ()=>
-      {
-        console.log('erreur connexion');
-
-      },
-      
-    });
+    
     
   }
 
   ngAfterViewChecked(){
     init_plugins();
 
+  }
+
+  retry() {
+    this.loading = true;
+    this.errorOccured =false;
+    this.loadCourses();
+
+    
+  }
+
+  loadCourses(){
+    this.courseService.getCourses().subscribe({
+      next: (res)=>
+      {
+       this.listCourses = res as Course[];
+      
+      },
+      error: ()=>
+      {
+        console.log('erreur connexion');
+        this.errorOccured = true;
+        this.loading = false;
+      },
+      complete: ()=>{
+        this.loading = false;
+      }
+      
+    });
   }
 
 }
