@@ -328,6 +328,7 @@ jQuery('#submit').on("click", function (e) {
 function init_plugins() { // add function
 
 		$('.filter-select').selectric();
+		$('.rating-tooltip-manual').rating();
 	
 }
 
